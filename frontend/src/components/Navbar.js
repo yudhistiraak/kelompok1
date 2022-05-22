@@ -4,7 +4,6 @@ import jwt_decode from 'jwt-decode';
 import { useNavigate} from 'react-router-dom';
 const Navbar = () => {
     const history = useNavigate();
-    const [name, setName] = useState('');
     const [role, setRole] = useState('');
     const Logout=async()=>{ //async untuk menunggu proses hingga dapat response dengan await
         try {
@@ -31,7 +30,6 @@ const Navbar = () => {
     const getRole = async () => {
         const response = await axios.get('http://localhost:5000/token')
         const decode = jwt_decode(response.data.accessToken)
-        setName(decode.name);
         setRole(decode.role);
     }
     function navbarRole() {
@@ -53,16 +51,14 @@ const Navbar = () => {
         } else {
             return(
                 <div className='navbar-start'>
+                    <a href='/customer' className="navbar-item">
+                        Customer
+                    </a>
                     <a href='/produk' className="navbar-item">
                         Produk
                     </a>
-<<<<<<< HEAD
-                    <a href='/customer' className="navbar-item">
-                        Customer
-=======
                     <a href='/transaksi' className="navbar-item">
-                        Transaksi
->>>>>>> 2cb287a72f201ce93f9c5871c8d7104bb76f1a7c
+                            Transaksi
                     </a>
                 </div>
             )
@@ -93,7 +89,7 @@ const Navbar = () => {
                         <div className="navbar-item">
                         <div className="buttons">
                                 <button onClick={editProfil} className="button is-dark">
-                                {name},{role}
+                                    Edit Profil
                                 </button>
                                 <button onClick={gantiPassword} className="button is-dark">
                                     Reset Password
