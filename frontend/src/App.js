@@ -12,6 +12,9 @@ import ResetPassword from './components/ResetPassword';
 import ViewProdukComponents from './components/ViewProdukComponents';
 import ViewUserComponents from './components/ViewUserComponents';
 import EditProfil from './components/EditProfil';
+import ViewCustomerComponents from './components/Customer/ViewCustomerComponents';
+import CreateCustomerComponents from './components/Customer/CreateCustomerComponents';
+import ListCustomerComponents from './components/Customer/ListCustomerComponents';
 
 function App() {
   return (
@@ -30,6 +33,10 @@ function App() {
         <Route path = '/role' element={<><Navbar /><ListRoleComponents /></>} />
         <Route path = '/createrole/:id' element={<CreateRoleComponents/>} />
         <Route path = '/edit-profil/:id' element={<EditProfil />} />
+
+        <Route path = '/customer' element={<><Navbar /><ListCustomerComponents /></>} />
+        <Route path = '/createcustomer/:id' element={<CreateCustomerComponents/>} />
+        <Route path = '/view-customer/:id' element={<ViewCustomerComponents/>} />
       </Routes>
       </BrowserRouter>
     </div>
