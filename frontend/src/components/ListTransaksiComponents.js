@@ -3,12 +3,17 @@ import { useNavigate} from 'react-router-dom';
 import axios from 'axios';
 import jwt_decode from 'jwt-decode';
 import swal from 'sweetalert';
-
-const ListCustomerComponents = () => {
-    const [nama_customer, setNamaCustomer]=useState('');
+const ListTransaksiComponents = () => {
+    const [tgl, setTgl]=useState('');
+    const [produk, setProduk]=useState('');
+    const [nama_customer, setCustomer]=useState('');
+    const [harga, setHarga]=useState('');
+    const [qty, setQty]=useState('');
+    const [transaksi, setTransaksi]=useState('');
+    const [transaksis, setTransaksis]=useState([]);
     const [token, setToken]=useState('');
     const [expired, setExpired]=useState('');
-    const [customers, setCustomers]=useState([]);
+    const [produks, setProduks]=useState([]);
 
     const history = useNavigate();
     const axiosJwt = axios.create();
@@ -19,7 +24,7 @@ const ListCustomerComponents = () => {
 
     useEffect(()=>{
         refreshToken();   
-        getCustomer(); 
+        getTransaksi(); 
         // eslint-disable-next-line
     },[]);
 
@@ -28,7 +33,11 @@ const ListCustomerComponents = () => {
             const response=await axios.get('http://localhost:5000/token');
             setToken(response.data.accessToken);
             const decode = jwt_decode(response.data.accessToken);
-            setNamaCustomer(decode.nama_customer);
+            setTgl(decode.tgl);
+            setCustomer(decode.nama_customer);
+            setProduk(decode.produk);
+            setHarga(decode.harga);
+            setQty(decode.qty);
             setExpired(decode.exp);
 
         } catch (error) {
@@ -44,72 +53,82 @@ const ListCustomerComponents = () => {
             config.headers.Authorization=`Bearer ${response.data.accessToken}`;
             setToken(response.data.accessToken);
             const decode = jwt_decode(response.data.accessToken);
-            setNamaCustomer(decode.nama_customer);
+            setTgl(decode.tgl);
+            setCustomer(decode.nama_customer);
+            setProduk(decode.produk);
+            setHarga(decode.harga);
+            setQty(decode.qty);
             setExpired(decode.exp);
         }
         return config;
     },(error)=>{
         return Promise.reject(error);
     });
-    const getCustomer=async()=>{
-        const response = await axiosJwt.get('http://localhost:5000/customer',{
+    const getTransaksi=async()=>{
+        const response = await axiosJwt.get('http://localhost:5000/transaksi',{
             headers:{
                 Authorization:`Bearer ${token}`
             } 
         });
-        setCustomers(response.data);   
+        setTransaksis(response.data);
     }
-    const addCustomer=()=>{
-        history('/createcustomer/_add');
+    const addTransaksi=()=>{
+        history('/createtransaksi/_add');
         
     }
-    const editCustomer=(id)=>{
-        history(`/createcustomer/${id}`);
+    const editTransaksi=(id)=>{
+        history(`/createtransaksi/${id}`);
     }
-    const viewCustomer=(id)=>{
-        history(`/view-customer/${id}`);
+    const viewTransaksi=(id)=>{
+        history(`/view-transaksi/${id}`);
     }
-    const deleteCustomer = async (id) => {
+    const deleteTransaksi = async (id) => {
         var proceed = window.confirm("Apakah anda yakin akan hapus?");
         if(proceed){
-            const response = await axiosJwt.delete('http://localhost:5000/customer/'+id,{
+            const response = await axiosJwt.delete('http://localhost:5000/transaksi/'+id,{
                 headers:{
                     Authorization: `Bearer ${token}`
                 }
             });
             swal(response.data.msg);
-            const NewCustomer = customers.filter(customer => customer.id !== id);
-            setCustomers(NewCustomer);
+            const NewTransaksi = transaksis.filter(transaksi => transaksi.id !== id);
+            setTransaksis(NewTransaksi);
         } 
     }
 
   return (
-      <div className='container mt-5'>Selamat datang {nama_customer}
+      <div className='container mt-5'>Selamat datang {nama_customer} tanggal transaksi {tgl}
           <hr />
-          <button onClick={addCustomer} className='button is-info'>Add Customer</button>
+          <button onClick={addTransaksi} className='button is-info'>Add Transaksi</button>
           <table className='table is-bordered is-striped is-narrow is-hoverable is-fullwidth is-fullwidth'>
               <thead>
                   <tr>
                       <th>No</th>
+                      <th>Tanggal Transaksi</th>
                       <th>Nama Customer</th>
-                      <th>Email</th>
+                      <th>Produk</th>
+                      <th>Harga</th>
+                      <th>Quantity</th>
                       <th>Action</th>
                   </tr>
               </thead>
               <tbody>
-                  {customers.map((customer, index)=>(
-                      <tr key={customer.id}>
+                  {transaksis.map((transaksi, index)=>(
+                      <tr key={transaksi.id}>
                           <td>{index + 1}</td>
-                          <td>{customer.nama_customer}</td>
-                          <td>{customer.email}</td>
+                          <td>{transaksi.tgl}</td>
+                          <td>{transaksi.nama_customer}</td>
+                          <td>{transaksi.produk}</td>
+                          <td>{transaksi.harga}</td>
+                          <td>{transaksi.qty}</td>
                           <td>
-                              <button onClick={()=>editCustomer(customer.id)}
+                              <button onClick={()=>editTransaksi(transaksi.id)}
                                     className='button is-default'>Edit</button>
                               <button style={mystyle}
-                                    onClick={()=>deleteCustomer(customer.id)}
+                                    onClick={()=>deleteTransaksi(transaksi.id)}
                                     className='button is-danger'>Delete</button>
                               <button style={mystyle}
-                                    onClick={()=>viewCustomer(customer.id)}
+                                    onClick={()=>viewTransaksi(transaksi.id)}
                                     className='button is-success'>View</button>
                           </td>
                       </tr>
@@ -120,4 +139,4 @@ const ListCustomerComponents = () => {
   )
 }
 
-export default ListCustomerComponents
+export default ListTransaksiComponents

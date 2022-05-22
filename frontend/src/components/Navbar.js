@@ -56,8 +56,13 @@ const Navbar = () => {
                     <a href='/produk' className="navbar-item">
                         Produk
                     </a>
+<<<<<<< HEAD
                     <a href='/customer' className="navbar-item">
                         Customer
+=======
+                    <a href='/transaksi' className="navbar-item">
+                        Transaksi
+>>>>>>> 2cb287a72f201ce93f9c5871c8d7104bb76f1a7c
                     </a>
                 </div>
             )

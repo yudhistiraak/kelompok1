@@ -5,9 +5,9 @@ import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import Produk from "./models/ProdukModel.js";
+import Customer from "./models/CustomerModel.js";
 import Users from "./models/UserModel.js";
 import Role from "./models/RoleModel.js";
-import Customer from "./models/CustomerModel.js";
 import Transaksi from "./models/TransaksiModel.js";
 
 dotenv.config();
