@@ -70,12 +70,13 @@ export const AddUser = async (req, res) => {
 }
 export const UpdateUser = async (req, res) => {
     const id = req.params.id;
-    const { name, email, role } = req.body;
-    // const salt = await bcrypt.genSalt();
-    // const hashPassword = await bcrypt.hash(password, salt);
+    const { name, email, password, role } = req.body;
+    const salt = await bcrypt.genSalt();
+    const hashPassword = await bcrypt.hash(password, salt);
     const data = {
         name: name,
         email: email,
+        password: hashPassword,
         role:role
     }
     try {

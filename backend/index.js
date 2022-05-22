@@ -7,6 +7,8 @@ import cors from "cors";
 import Produk from "./models/ProdukModel.js";
 import Users from "./models/UserModel.js";
 import Role from "./models/RoleModel.js";
+import Customer from "./models/CustomerModel.js";
+import Transaksi from "./models/TransaksiModel.js";
 
 dotenv.config();
 const app = express();
@@ -17,6 +19,8 @@ try {
     await Produk.sync();
     await Users.sync();
     await Role.sync();
+    await Customer.sync();
+    await Transaksi.sync();
 } catch (error) {
     console.log(error);
 }
