@@ -77,6 +77,9 @@ const Navbar = () => {
                 <div id="navbarBasicExample" className="navbar-menu">
                     <div className="navbar-start">
                         {navbarRole()}
+                        <a href='/transaksi' className="navbar-item">
+                            Transaksi
+                        </a>
                     </div>
 
                     <div className="navbar-end">
