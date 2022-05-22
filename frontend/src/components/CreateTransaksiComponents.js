@@ -35,7 +35,12 @@ const CreateTransaksiComponents = () => {
             setToken(response.data.accessToken);
             const decode = jwt_decode(response.data.accessToken);
             setExpired(decode.exp);
-
+            if (decode.role == 'admin') {
+                if (id!=decode.userId) {
+                    e.preventDefault();
+                    history('/home');
+                }
+            }
         } catch (error) {
             if (error.response) {
                 history('/');
@@ -50,6 +55,11 @@ const CreateTransaksiComponents = () => {
             setToken(response.data.accessToken);
             const decode = jwt_decode(response.data.accessToken);
             setExpired(decode.exp);
+            if (decode.role == 'admin') {
+                if (id!=decode.userId) {
+                    history('/home');
+                }
+            }
         }
         return config;
     },(error)=>{
